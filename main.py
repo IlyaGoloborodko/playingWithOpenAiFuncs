@@ -1,3 +1,5 @@
+import json
+
 from ai_calls import ai_calling
 
 
@@ -17,9 +19,11 @@ if __name__ == "__main__":
             break
         messages.append({'role': 'user', 'content': message})
 
-        completion = ai_calling(messages)
+        response = ai_calling(messages)
+        # tool_call = completion.choices[0].message.tool_calls[0]
+        # arguments = json.loads(tool_call['function']['arguments'])
 
-        assistant_message = completion.choices[0].message.content
+        assistant_message = response.content
         messages.append({'role': 'assistant', 'content': assistant_message})
 
         print(assistant_message)
