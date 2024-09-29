@@ -4,6 +4,24 @@ import datetime
 
 from typing import Optional
 
+GET_DELIVERY_DATE_DEFINITION = {
+    "name": "get_delivery_date",
+    "description": "Get the delivery date for a customer's order."
+                   " Call this whenever you need to know the delivery date,"
+                   " for example when a customer asks 'Where is my package'",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "order_id": {
+                "type": "integer",
+                "description": "The customer's order ID.",
+            },
+        },
+        "required": ["order_id"],
+        "additionalProperties": False,
+    }
+}
+
 
 def load_orders():
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
