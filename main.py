@@ -1,26 +1,27 @@
-import os
-
-from dotenv import load_dotenv
-from openai import OpenAI
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
+from ai_calls import ai_calling
 
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
+messages = [
+    {"role": "system", "content": "You are a helpful customer support assistant."
+                                  " Use the supplied tools to assist the user."},
+]
 
-completion = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {
-            "role": "user",
-            "content": "Write a haiku about recursion in programming."
-        }
-    ]
-)
+if __name__ == "__main__":
 
-print(completion.choices[0].message.content)
+    print('Привет, что вы хотите узнать?\n'
+          'Остановить процесс можно, введя команду "/stop"')
+
+    while True:
+        message = input()
+        if message == '/stop':
+            break
+        messages.append({'role': 'user', 'content': message})
+
+        completion = ai_calling(messages)
+
+        assistant_message = completion.choices[0].message.content
+        messages.append({'role': 'assistant', 'content': assistant_message})
+
+        print(assistant_message)
+
+
