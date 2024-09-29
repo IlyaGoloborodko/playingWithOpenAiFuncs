@@ -28,3 +28,10 @@ def ai_calling(messages):
 
     return completion.choices[0].message
 
+
+def send_func_result(messages):
+    completion = client.chat.completions.create(
+        model='gpt-4o-mini',
+        messages=messages
+    )
+    return completion.choices[0].message
